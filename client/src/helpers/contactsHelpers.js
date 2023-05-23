@@ -1,18 +1,22 @@
 import axios from "axios";
-import { contactsLoading, receivedSelected } from "../features/contactsSlice";
+import { contactsLoading, receivedSelected, receivedAll } from "../features/contactsSlice";
 
 export function fetchContacts() {
     return async dispatch => {
-        dispatch(contactsLoading());
-        const response = await axios.get(import.meta.env.VITE_BASE_URL);
-        dispatch(receivedAll(response.data.data));
+        try {
+            dispatch(contactsLoading());
+            const response = await axios.get(import.meta.env.VITE_SERVER_URL);
+            dispatch(receivedAll(response.data.data));
+        } catch (error) {
+            console.error(error);
+        }
     }
 }
 
 export function fetchContactById(id) {
     return async dispatch => {
         dispatch(contactsLoading());
-        const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/${id}`);
+        const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/${id}`);
         dispatch(receivedSelected(response.data.data));
     }
 }
@@ -20,21 +24,25 @@ export function fetchContactById(id) {
 export function postContact(body) {
     return async dispatch => {
         dispatch(contactsLoading());
-        await axios.post(import.meta.env.VITE_BASE_URL, body);
+        await axios.post(import.meta.env.VITE_SERVER_URL, body);
         dispatch(fetchContacts());
     }
 }
 
 export function deleteContacts(id) {
     return async dispatch => {
-        await axios.get(`${import.meta.env.VITE_BASE_URL}/${id}`);
+        await axios.delete(`${import.meta.env.VITE_SERVER_URL}/${id}`);
         dispatch(fetchContacts());
     }
 }
 
 export function putContacts(id, body) {
     return async dispatch => {
-        await axios.put(`${import.meta.env.VITE_BASE_URL}/${id}`, body);
-        dispatch(fetchContacts());
+        try {
+            await axios.put(`${import.meta.env.VITE_SERVER_URL}/${id}`, body);
+            dispatch(fetchContacts());
+        } catch (error) {
+            console.error(error);
+        }
     }
 }

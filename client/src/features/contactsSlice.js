@@ -12,11 +12,11 @@ export const contactsSlice = createSlice({
         contactsLoading: state => {
             state.isLoading = true;
         },
-        receivedAll: state => {
+        receivedAll: (state, action) => {
             state.isLoading = false;
             state.all = action.payload;
         },
-        receivedSelected: state => {
+        receivedSelected: (state, action) => {
             state.isLoading = false;
             state.selected = action.payload;
         },
