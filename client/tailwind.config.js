@@ -7,9 +7,15 @@ export default {
   ],
   theme: {
     extend: {},
+    fontFamily: {
+      'display': ['Oswald', 'serif'],
+      'items': ['Questrial', 'sans-serif'],
+      'buttons': ['Cabin', 'sans-serif']
+    }
   },
   plugins: [
+    require('@tailwindcss/typography'),
     require('flowbite/plugin'),
-    require("daisyui")
+    require("daisyui"),
   ],
 }

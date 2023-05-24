@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-export const contactsSlice = createSlice({
+export const contactsSliceTest = createSlice({
     name: 'contacts',
     initialState: {
         all: [],
@@ -13,20 +13,14 @@ export const contactsSlice = createSlice({
     },
     reducers: {
         contactsLoading: state => {
-            state.isLoading = true;
+            state.isLoading = false;
         },
         contactsFormLoading: state => {
             state.isLoadingForm = true;
         },
         receivedAll: (state, action) => {
-            state.pages = [];
             state.isLoading = false;
             state.all = action.payload;
-            // console.log(action.payload.length);
-            for (let i = 0; i <= Math.ceil(action.payload.length / 10) - 1; i++) {
-                state.pages.push(i);
-            };
-            state.pageState = 0;
         },
         receivedSelected: (state, action) => {
             state.isLoadingForm = false;
@@ -41,12 +35,9 @@ export const contactsSlice = createSlice({
                 photo: ''
             };
             state.isAdd = true;
-        },
-        changePage: (state, action) => {
-            state.pageState = action.payload;
         }
     }
 })
 
-export const { contactsLoading, contactsFormLoading, receivedAll, receivedSelected, setToAddForm, changePage } = contactsSlice.actions;
-export default contactsSlice.reducer
+export const { contactsLoading, contactsFormLoading, receivedAll, receivedSelected, setToAddForm } = contactsSliceTest.actions;
+export default contactsSliceTest.reducer
